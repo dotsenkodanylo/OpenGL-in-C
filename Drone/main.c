@@ -34,6 +34,7 @@ bool key_left = false;
 bool key_right = false;
 bool key_up = false;
 bool key_down = false;
+bool droneSpin = false; 
 
 
 // Lighting/shading and material properties for drone - upcoming lecture - just copy for now
@@ -273,6 +274,12 @@ void display()
         
     glPopMatrix();
     glPopMatrix();
+    glPushMatrix();
+    glScalef(1.0,2.5,1.0);
+    glTranslatef(5.0, 1.5, 5.0);
+    glutSolidCube(3.0);
+    glPopMatrix();
+    
 
 
     /*
@@ -288,7 +295,9 @@ void display()
 
         glPopMatrix();
     */
-    angle+=20.0;
+    if(droneSpin == true){
+        angle+=20.0;
+    } 
     /*glPushMatrix();
     glTranslatef(2.0, 2.0, 0.0);
     glRotatef(25.0, 0.0, 1.0, 0.0);
@@ -333,12 +342,13 @@ void keyboard(unsigned char key, int x, int y)
         currX += 0.5 * cosf(rotAngle * 3.14159 / 180);
         currY += 0.5 * sinf(rotAngle * 3.14159 / 180);
         break;
-        printf("Hi there friends");
+        MessageBox(0,"Hello","Welcome Message",1);    
     case 'b': 
         currX -= 0.5 * cosf(rotAngle * 3.14159 / 180);
         currY -= 0.5 * sinf(rotAngle * 3.14159 / 180);
         break;
-
+    case 's':
+        droneSpin = true;
     }
 
     glutPostRedisplay();   // Trigger a window redisplay
