@@ -1,0 +1,18 @@
+CPS 511 - Assignment 1
+
+Danylo Dotsenko - 500696280 - ddotsenko@ryerson.ca
+
+Drone Assignment
+
+Hi there! I completed this assignment on my OS X system, which natively has GLUT pre-installed. To compile the C files, I used the following command:
+
+	clang -o run -framework GLUT -framework OpenGL *.c,
+
+which compiles all the files into an executable, which can be run with:
+
+	./run
+
+I will gladly come in and demo in person if need be; I hope you experience 0 
+problems with compilation and testing of the program. Thank you! 
+	
+	
