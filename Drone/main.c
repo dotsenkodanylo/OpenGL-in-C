@@ -134,130 +134,86 @@ void display()
     glMaterialfv(GL_FRONT, GL_DIFFUSE, drone_mat_diffuse);
     glMaterialfv(GL_FRONT, GL_SHININESS, drone_mat_shininess);
 
-    // Apply transformations to move drone
-    // ...
 
-    // Apply transformations to construct drone, modify this!
-    glPushMatrix();
-    glTranslatef(currX, yr, currY + 6); 
-    glRotatef(-rotAngle, 0.0, 1.0, 0.0);
-    glTranslatef(-currX, -yr, -currY - 6); 
 
+    // The model of the drone is constructed:
+
+    glPushMatrix();                                                    
+    glTranslatef(currX, yr, currY + 6);         //p' = I * T(currX,yr,currY + 6) * p             
+    glRotatef(-rotAngle, 0.0, 1.0, 0.0);        //p' = I * T(currX,currY,2) * R_y(-rotAngle) * p  
+    glTranslatef(-currX, -yr, -currY - 6);      //p' = I * T(currX,yr,currY + 6) * R_y(-rotAngle) * T(-currX,-currY,2) * p      
     
-    glPushMatrix();
-    glTranslatef(-1.0, 3.0, 5.0);    
-    glTranslatef(currX, yr, currY);
-    glRotatef(angle, 0.0, 1.0, 0.0);
-    glScalef(5.0, 0.2, 0.3);
-    //glutSolidCube(1);
-    //glTranslatef(1.0, 2.0, 0.0);
+    glPushMatrix();                             //Store previous CTM as CTM = I*T(currX,yr,currY + 6)R_y(-rotAngle)T(-currX,-currY,2)
+    glTranslatef(-1.0, 3.0, 5.0);               //p' = I*T(currX,yr,currY + 6)R_y(-rotAngle)T(-currX,-currY,2) * T(-1,3,5)
+    glTranslatef(currX, yr, currY);             //p' = I*T(currX,yr,currY + 6)R_y(-rotAngle)T(-currX,-currY,2) * T(-1,3,5) * T(currX,yr,currY)
+    glRotatef(angle, 0.0, 1.0, 0.0);            //p' = I*T(currX,yr,currY + 6)R_y(-rotAngle)T(-currX,-currY,2) * T(-1,3,5) * T(currX,yr,currY) * R_y(angle)
+    glScalef(5.0, 0.2, 0.3);                    //p' = I*T(currX,yr,currY + 6)R_y(-rotAngle)T(-currX,-currY,2) * T(-1,3,5) * T(currX,yr,currY) * R_y(angle) * scaleF(5,0.2,0.3)
+    glutSolidCube(0.4);                 
+    glPopMatrix();                              //Restoring CTM to pre T(-1,3,5)
+
+    glPushMatrix();                             //Store previous CTM as CTM = I*T(currX,yr,currY + 6)R_y(-rotAngle)T(-currX,-currY,2)
+    glTranslatef(1.0, 3.0, 5.0);                //p' = I*T(currX,yr,currY + 6)R_y(-rotAngle)T(-currX,-currY,2) * T(1,3,5)
+    glTranslatef(currX, yr, currY);             //p' = I*T(currX,yr,currY + 6)R_y(-rotAngle)T(-currX,-currY,2) * T(1,3,5) * T(currX,yr,currY)
+    glRotatef(angle, 0.0, 1.0, 0.0);            //p' = I*T(currX,yr,currY + 6)R_y(-rotAngle)T(-currX,-currY,2) * T(1,3,5) * T(currX,yr,currY) * R_y(angle)
+    glScalef(5.0, 0.2, 0.3);                    //p' = I*T(currX,yr,currY + 6)R_y(-rotAngle)T(-currX,-currY,2) * T(1,3,5) * T(currX,yr,currY) * R_y(angle) * scaleF(5,0.2,0.3)
     glutSolidCube(0.4);    
-    glPopMatrix();
+    glPopMatrix();                              //Restoring CTM to pre T(-1,3,5)
 
-    glPushMatrix();
-    glTranslatef(1.0, 3.0, 5.0);    
-    glTranslatef(currX, yr, currY);
-    glRotatef(angle, 0.0, 1.0, 0.0);
-    glScalef(5.0, 0.2, 0.3);
-    //glutSolidCube(1);
-    //glTranslatef(1.0, 2.0, 0.0);
+    glPushMatrix();                             //Store previous CTM as CTM = I*T(currX,yr,currY + 6)R_y(-rotAngle)T(-currX,-currY,2)
+    glTranslatef(1.0, 3.0, 7.0);                //p' = I*T(currX,yr,currY + 6)R_y(-rotAngle)T(-currX,-currY,2) * T(1,3,7)
+    glTranslatef(currX, yr, currY);             //p' = I*T(currX,yr,currY + 6)R_y(-rotAngle)T(-currX,-currY,2) * T(1,3,7) * T(currX,yr,currY)
+    glRotatef(angle, 0.0, 1.0, 0.0);            //p' = I*T(currX,yr,currY + 6)R_y(-rotAngle)T(-currX,-currY,2) * T(1,3,7) * T(currX,yr,currY) * R_y(angle)
+    glScalef(5.0, 0.2, 0.3);                    //p' = I*T(currX,yr,currY + 6)R_y(-rotAngle)T(-currX,-currY,2) * T(1,3,5) * T(currX,yr,currY) * R_y(angle) * scaleF(5,0.2,0.3)
     glutSolidCube(0.4);    
-    glPopMatrix();
+    glPopMatrix();                              //Restoring CTM to pre T(-1,3,5)
 
-    glPushMatrix();
-    glTranslatef(1.0, 3.0, 7.0);    
-    glTranslatef(currX, yr, currY);
-    
-    glRotatef(angle, 0.0, 1.0, 0.0);
-    glScalef(5.0, 0.2, 0.3);
-    //glutSolidCube(1);
-    //glTranslatef(1.0, 2.0, 0.0);
+    glPushMatrix();                             //Store previous CTM as CTM = I*T(currX,yr,currY + 6)R_y(-rotAngle)T(-currX,-currY,2)
+    glTranslatef(-1.0, 3.0, 7.0);               //p' = I*T(currX,yr,currY + 6)R_y(-rotAngle)T(-currX,-currY,2) * T(-1,3,7)
+    glTranslatef(currX, yr, currY);             //p' = I*T(currX,yr,currY + 6)R_y(-rotAngle)T(-currX,-currY,2) * T(-1,3,7) * T(currX,yr,currY)
+    glRotatef(angle, 0.0, 1.0, 0.0);            //p' = I*T(currX,yr,currY + 6)R_y(-rotAngle)T(-currX,-currY,2) * T(-1,3,7) * T(currX,yr,currY) * R_y(angle)
+    glScalef(5.0, 0.2, 0.3);                    //p' = I*T(currX,yr,currY + 6)R_y(-rotAngle)T(-currX,-currY,2) * T(1,3,5) * T(currX,yr,currY) * R_y(angle) * scaleF(5,0.2,0.3)
     glutSolidCube(0.4);    
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(-1.0, 3.0, 7.0);    
-    glTranslatef(currX, yr, currY);    
-    glRotatef(angle, 0.0, 1.0, 0.0);
-    glScalef(5.0, 0.2, 0.3);
-    //glutSolidCube(1);
-    //glTranslatef(1.0, 2.0, 0.0);
-    glutSolidCube(0.4);    
-    glPopMatrix();
-
-
+    glPopMatrix();                              //Restoring CTM to pre T(-1,3,5)
 
     glPushMatrix();
     glTranslatef(-1.0, 2.5, 7.0);    
     glTranslatef(currX, yr, currY);
-    //glRotatef(-rotAngle, 0.0, 1.0,0.0);
-    
-    //glRotatef(25, 0.0, 1.0, 1.0);
     glScalef(0.5, 3.0, 0.5);
-    //glutSolidCube(1);
-    //glTranslatef(1.0, 2.0, 0.0);
     glutSolidCube(0.4);    
     glPopMatrix();
 
-     glPushMatrix();
+    glPushMatrix();
     glTranslatef(1.0, 2.5, 7.0);    
     glTranslatef(currX, yr, currY);
-    //glRotatef(-rotAngle, 0.0, 1.0,0.0);
-    
-    //glRotatef(angle, 0.0, 1.0, 0.0);
     glScalef(0.5, 3.0, 0.5);
-    //glutSolidCube(1);
-    //glTranslatef(1.0, 2.0, 0.0);
     glutSolidCube(0.4);    
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(-1.0, 2.5, 5.0);    
     glTranslatef(currX, yr, currY); 
-    //glRotatef(-rotAngle, 0.0, 1.0,0.0);
-    
-    //glRotatef(angle, 0.0, 1.0, 0.0);
     glScalef(0.5, 3.0, 0.5);
-    //glutSolidCube(1);
-    //glTranslatef(1.0, 2.0, 0.0);
     glutSolidCube(0.4);    
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(1.0, 2.5, 5.0);    
     glTranslatef(currX, yr, currY); 
-    //glRotatef(-rotAngle, 0.0, 1.0,0.0);
-
-    //glRotatef(angle, 0.0, 1.0, 0.0);
     glScalef(0.5, 3.0, 0.5);
-    //glutSolidCube(1);
-    //glTranslatef(1.0, 2.0, 0.0);
     glutSolidCube(0.4);    
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(0.0, 2.0, 5.0);    
     glTranslatef(currX, yr, currY); 
-    //glRotatef(-rotAngle, 0.0, 1.0,0.0);
-    //glRotatef(angle, 0.0, 1.0, 0.0);
     glScalef(5.0, 0.2, 0.2);
-
-    //glutSolidCube(1);
-    //glTranslatef(1.0, 2.0, 0.0);
     glutSolidCube(0.4);    
     glPopMatrix();
 
-
-
-     glPushMatrix();
+    glPushMatrix();
     glTranslatef(0.0, 2.0, 7.0);    
     glTranslatef(currX, yr, currY); 
-    //glRotatef(-rotAngle, 0.0, 1.0, 0.0);
-
-    //glRotatef(angle, 0.0, 1.0, 0.0);
     glScalef(5.0, 0.2, 0.2);
-    //glutSolidCube(1);
-    //glTranslatef(1.0, 2.0, 0.0);
     glutSolidCube(0.4);    
     glPopMatrix();
 
@@ -265,10 +221,7 @@ void display()
     glPushMatrix();
     glTranslatef(0.0, 2.0, 6.0);    
     glTranslatef(currX, yr, currY); 
-    //glRotatef(-rotAngle, 0.0, 1.0, 0.0);
     glScalef(0.2, 0.2, 5.0);
-    //glutSolidCube(1);
-    //glTranslatef(1.0, 2.0, 0.0);
     glutSolidCube(0.4);    
 
         
@@ -282,31 +235,10 @@ void display()
     
 
 
-    /*
-    glPushMatrix();
-    //glTranslatef(xr, yr, 0);
-    glScalef(10, 2, 2);
-    glTranslatef(currX,  yr, currY);    
-    
-    glRotatef(-rotAngle, 0.0, 1.0,0.0);
-    //glutSolidCube(1);
-    //glTranslatef(1.0, 2.0, 0.0);
-    glutSolidCube(0.4);  
-
-        glPopMatrix();
-    */
     if(droneSpin == true){
         angle+=20.0;
     } 
-    /*glPushMatrix();
-    glTranslatef(2.0, 2.0, 0.0);
-    glRotatef(25.0, 0.0, 1.0, 0.0);
-    glScalef(6.0, 1.0, 1.0);
-    glutSolidCube(0.2);
-    glPopMatrix();
-*/
-    
-    // Draw ground mesh
+        // Draw ground mesh
     DrawMeshQM(&groundMesh, meshSize);
 
     glutSwapBuffers();   // Double buffering, swap buffers
@@ -349,6 +281,7 @@ void keyboard(unsigned char key, int x, int y)
         break;
     case 's':
         droneSpin = true;
+        printf("Hi there\n");
     }
 
     glutPostRedisplay();   // Trigger a window redisplay
@@ -391,6 +324,8 @@ void functionKeys(int key, int x, int y)
      }
       else if (key == GLUT_KEY_RIGHT){
         rotAngle+=10;  
+      } else if (key == GLUT_KEY_F1) {
+          printf("Help!\n");
       }
   
 
